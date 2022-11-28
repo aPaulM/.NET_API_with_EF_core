@@ -6,14 +6,30 @@ namespace RpgAPI.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private static Character Knight = new Character();
-
-        [HttpGet]
-        public IActionResult Get()
+        private static List<Character> characters = new List<Character>
         {
-            return Ok(Knight);
+            new Character(),
+            new Character() {Id = 1, Name = "Mahald"}
+        };
+
+        [HttpGet("GetAll")]
+        public ActionResult<List<Character>> GetAllCharacters()
+        {
+            return Ok(characters);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Character> GetSingleCharacterById(int id)
+        {
+            return Ok(characters.FirstOrDefault(c => c.Id == id));
+        }
+
+        [HttpPost]
+        public ActionResult<List<Character>> AddNewCharacter(Character newCharacter)
+        {
+            characters.Add(newCharacter);
+            return Ok(characters);
+        }
 
     }
 }

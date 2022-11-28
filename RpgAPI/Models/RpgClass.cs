@@ -1,5 +1,8 @@
-﻿namespace RpgAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace RpgAPI.Models
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum RpgClass
     {
         Knight = 1,
