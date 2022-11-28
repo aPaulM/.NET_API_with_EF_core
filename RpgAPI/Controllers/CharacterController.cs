@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RpgAPI.Service;
 
 namespace RpgAPI.Controllers
 {
@@ -6,29 +7,31 @@ namespace RpgAPI.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private static List<Character> characters = new List<Character>
+
+        private readonly ICharacterService _characterService;
+
+        public CharacterController(ICharacterService characterService)
         {
-            new Character(),
-            new Character() {Id = 1, Name = "Mahald"}
-        };
+            _characterService = characterService;
+        }
+
 
         [HttpGet("GetAll")]
         public ActionResult<List<Character>> GetAllCharacters()
         {
-            return Ok(characters);
+            return Ok(_characterService.GetAllCharacters());
         }
 
         [HttpGet("{id}")]
         public ActionResult<Character> GetSingleCharacterById(int id)
         {
-            return Ok(characters.FirstOrDefault(c => c.Id == id));
+            return Ok(_characterService.GetSingleCharacterById(id));
         }
 
         [HttpPost]
         public ActionResult<List<Character>> AddNewCharacter(Character newCharacter)
         {
-            characters.Add(newCharacter);
-            return Ok(characters);
+            return Ok(_characterService.AddNewCharacter(newCharacter));
         }
 
     }
