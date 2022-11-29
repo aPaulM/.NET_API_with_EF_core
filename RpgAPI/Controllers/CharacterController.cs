@@ -35,5 +35,16 @@ namespace RpgAPI.Controllers
             return Ok(await _characterService.AddNewCharacter(newCharacter));
         }
 
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            var serviceResponse = await _characterService.UpdateCharacter(updatedCharacter);
+            if (serviceResponse.Data == null)
+            {
+                return NotFound(serviceResponse);
+            }
+            return Ok(serviceResponse);
+        }
+
     }
 }

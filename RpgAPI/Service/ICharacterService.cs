@@ -10,5 +10,7 @@ namespace RpgAPI.Service
         Task<ServiceResponse<GetCharacterDto>> GetSingleCharacterById(int id);
         //Post
         Task<ServiceResponse<List<GetCharacterDto>>> AddNewCharacter(AddCharacterDto newCharacter);
+        //Put
+        Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter);
     }
 }

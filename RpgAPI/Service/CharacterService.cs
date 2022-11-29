@@ -45,5 +45,35 @@ namespace RpgAPI.Service
             serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            ServiceResponse<GetCharacterDto> serviceResponse = new ServiceResponse<GetCharacterDto>();
+
+            try
+            {
+                Character character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+
+                _mapper.Map(updatedCharacter, character);
+                // The line above REPLACES all the code below... With a single line of code using an AutoMapper!!!
+                /*
+                character.Name = updatedCharacter.Name;
+                character.HitPoints = updatedCharacter.HitPoints;
+                character.Strength = updatedCharacter.Strength;
+                character.Defense = updatedCharacter.Defense;
+                character.Intelligence = updatedCharacter.Intelligence;
+                character.Class = updatedCharacter.Class;
+                */
+
+                serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+            }
+            catch(Exception e)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+            }
+
+            return serviceResponse;
+        }
     }
 }
