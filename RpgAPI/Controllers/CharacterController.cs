@@ -23,19 +23,24 @@ namespace RpgAPI.Controllers
             return Ok(await _characterService.GetAllCharacters());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetSingle/{id}")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingleCharacterById(int id)
         {
-            return Ok(await _characterService.GetSingleCharacterById(id));
+            var serviceResponse = await _characterService.GetSingleCharacterById(id);
+            if (serviceResponse.Data == null)
+            {
+                return NotFound(serviceResponse);
+            }
+            return serviceResponse;
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> AddNewCharacter(AddCharacterDto newCharacter)
         {
             return Ok(await _characterService.AddNewCharacter(newCharacter));
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
         {
             var serviceResponse = await _characterService.UpdateCharacter(updatedCharacter);
@@ -46,5 +51,15 @@ namespace RpgAPI.Controllers
             return Ok(serviceResponse);
         }
 
+        [HttpDelete("Delete/{id}")]
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> DeleteCharacter(int id)
+        {
+            var serviceResponse = await _characterService.DeleteCharacter(id);
+            if (serviceResponse.Data == null)
+            {
+                return NotFound(serviceResponse);
+            }
+            return Ok(serviceResponse);
+        }
     }
 }

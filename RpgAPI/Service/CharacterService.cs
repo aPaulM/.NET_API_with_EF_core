@@ -40,9 +40,17 @@ namespace RpgAPI.Service
         public async Task<ServiceResponse<GetCharacterDto>> GetSingleCharacterById(int id)
         {
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
-            var character = characters.FirstOrDefault(c => c.Id == id);
-
-            serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+            try
+            {
+                var character = characters.First(c => c.Id == id);
+                serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+            }
+            catch(Exception e)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+            }
+            
             return serviceResponse;
         }
 
@@ -52,7 +60,7 @@ namespace RpgAPI.Service
 
             try
             {
-                Character character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+                Character character = characters.First(c => c.Id == updatedCharacter.Id);
 
                 _mapper.Map(updatedCharacter, character);
                 // The line above REPLACES all the code below... With a single line of code using an AutoMapper!!!
@@ -66,8 +74,30 @@ namespace RpgAPI.Service
                 */
 
                 serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+                serviceResponse.Message = "Character has been updated.";
+
             }
             catch(Exception e)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+            }
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
+        {
+            ServiceResponse<List<GetCharacterDto>> serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+
+            try
+            {
+                Character character = characters.First(c => c.Id == id);
+                characters.Remove(character);
+                serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+                serviceResponse.Message = "Character with id: " + "(" + id + ")" + " has been deleted.";
+            }
+            catch (Exception e)
             {
                 serviceResponse.Success = false;
                 serviceResponse.Message = e.Message;
