@@ -9,20 +9,27 @@
             new Character() {Id = 1, Name = "Mahald"}
         };
 
-        public async Task<List<Character>> AddNewCharacter(Character newCharacter)
+        public async Task<ServiceResponse<List<Character>>> AddNewCharacter(Character newCharacter)
         {
+            var serviceResponse = new ServiceResponse<List<Character>>();
+
             characters.Add(newCharacter);
-            return characters;
+            serviceResponse.Data = characters;
+            return serviceResponse;
         }
 
-        public async Task<List<Character>> GetAllCharacters()
+        public async Task<ServiceResponse<List<Character>>> GetAllCharacters()
         {
-            return characters;
+            return new ServiceResponse<List<Character>> { Data = characters };
         }
 
-        public async Task<Character> GetSingleCharacterById(int id)
+        public async Task<ServiceResponse<Character>> GetSingleCharacterById(int id)
         {
-            return characters.FirstOrDefault(c => c.Id == id);
+            var serviceResponse = new ServiceResponse<Character>();
+            var character = characters.FirstOrDefault(c => c.Id == id);
+
+            serviceResponse.Data = character;
+            return serviceResponse;
         }
     }
 }
