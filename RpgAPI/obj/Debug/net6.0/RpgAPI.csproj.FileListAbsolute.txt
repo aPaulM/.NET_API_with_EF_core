@@ -25,3 +25,5 @@ C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\refint\RpgAPI.dll
 C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\RpgAPI.pdb
 C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\RpgAPI.genruntimeconfig.cache
 C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\ref\RpgAPI.dll
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

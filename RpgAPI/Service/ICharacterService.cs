@@ -1,12 +1,14 @@
-﻿namespace RpgAPI.Service
+﻿using RpgAPI.Dto;
+
+namespace RpgAPI.Service
 {
     public interface ICharacterService
     {
         //Get
-        Task<ServiceResponse<List<Character>>> GetAllCharacters();
+        Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
         //Get
-        Task<ServiceResponse<Character>> GetSingleCharacterById(int id);
+        Task<ServiceResponse<GetCharacterDto>> GetSingleCharacterById(int id);
         //Post
-        Task<ServiceResponse<List<Character>>> AddNewCharacter(Character newCharacter);
+        Task<ServiceResponse<List<GetCharacterDto>>> AddNewCharacter(AddCharacterDto newCharacter);
     }
 }
