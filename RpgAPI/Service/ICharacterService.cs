@@ -3,10 +3,10 @@
     public interface ICharacterService
     {
         //Get
-        List<Character> GetAllCharacters();
+        Task<List<Character>> GetAllCharacters();
         //Get
-        Character GetSingleCharacterById(int id);
+        Task<Character> GetSingleCharacterById(int id);
         //Post
-        List<Character> AddNewCharacter(Character newCharacter);
+        Task<List<Character>> AddNewCharacter(Character newCharacter);
     }
 }

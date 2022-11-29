@@ -17,21 +17,21 @@ namespace RpgAPI.Controllers
 
 
         [HttpGet("GetAll")]
-        public ActionResult<List<Character>> GetAllCharacters()
+        public async Task<ActionResult<List<Character>>> GetAllCharacters()
         {
-            return Ok(_characterService.GetAllCharacters());
+            return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Character> GetSingleCharacterById(int id)
+        public async Task<ActionResult<Character>> GetSingleCharacterById(int id)
         {
-            return Ok(_characterService.GetSingleCharacterById(id));
+            return Ok(await _characterService.GetSingleCharacterById(id));
         }
 
         [HttpPost]
-        public ActionResult<List<Character>> AddNewCharacter(Character newCharacter)
+        public async Task<ActionResult<List<Character>>> AddNewCharacter(Character newCharacter)
         {
-            return Ok(_characterService.AddNewCharacter(newCharacter));
+            return Ok(await _characterService.AddNewCharacter(newCharacter));
         }
 
     }
