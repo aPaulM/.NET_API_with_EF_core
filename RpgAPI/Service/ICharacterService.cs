@@ -5,7 +5,7 @@ namespace RpgAPI.Service
     public interface ICharacterService
     {
         //Get
-        Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters(int userId);
+        Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
         //Get
         Task<ServiceResponse<GetCharacterDto>> GetSingleCharacterById(int id);
         //Post
