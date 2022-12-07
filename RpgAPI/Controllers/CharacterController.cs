@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RpgAPI.Dto;
+using RpgAPI.Dtos.Character;
 using RpgAPI.Service;
 
 namespace RpgAPI.Controllers

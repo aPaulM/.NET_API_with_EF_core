@@ -1,4 +1,4 @@
-﻿using RpgAPI.Dto;
+﻿using RpgAPI.Dtos.Character;
 
 namespace RpgAPI.Service
 {

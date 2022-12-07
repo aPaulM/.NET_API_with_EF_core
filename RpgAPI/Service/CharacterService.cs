@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RpgAPI.Data;
-using RpgAPI.Dto;
+using RpgAPI.Dtos.Character;
 
 namespace RpgAPI.Service
 {
