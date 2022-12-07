@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using RpgAPI.Data;
 using RpgAPI.Dto;
 
 namespace RpgAPI.Service
@@ -6,35 +8,36 @@ namespace RpgAPI.Service
     public class CharacterService : ICharacterService
     {
 
-        private static List<Character> characters = new List<Character>
-        {
-            new Character(),
-            new Character() {Id = 1, Name = "Mahald"}
-        };
-
         private readonly IMapper _mapper;
+        private readonly DataContext _dataContext;
 
-        public CharacterService(IMapper mapper)
+        public CharacterService(IMapper mapper, DataContext dataContext)
         {
             _mapper = mapper;
+            _dataContext = dataContext;
         }
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddNewCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             Character character = _mapper.Map<Character>(newCharacter);
-            character.Id = characters.Max(c => c.Id) + 1;
-            characters.Add(character);
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            _dataContext.Characters.Add(character);
+            await _dataContext.SaveChangesAsync();
+            serviceResponse.Data = await _dataContext.Characters
+                .Select(c => _mapper.Map<GetCharacterDto>(c))
+                .ToListAsync();
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
-            return new ServiceResponse<List<GetCharacterDto>> 
-            {
-                Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList()
-            };
+
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+            var dbCharacters = await _dataContext.Characters.ToListAsync();
+            serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+
+            return serviceResponse;
+           
         }
 
         public async Task<ServiceResponse<GetCharacterDto>> GetSingleCharacterById(int id)
@@ -42,8 +45,8 @@ namespace RpgAPI.Service
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
             try
             {
-                var character = characters.First(c => c.Id == id);
-                serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == id);
+                serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
             }
             catch(Exception e)
             {
@@ -60,20 +63,21 @@ namespace RpgAPI.Service
 
             try
             {
-                Character character = characters.First(c => c.Id == updatedCharacter.Id);
+               
+                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == updatedCharacter.Id);
 
-                _mapper.Map(updatedCharacter, character);
+                // _mapper.Map(updatedCharacter, character);
                 // The line above REPLACES all the code below... With a single line of code using an AutoMapper!!!
-                /*
-                character.Name = updatedCharacter.Name;
-                character.HitPoints = updatedCharacter.HitPoints;
-                character.Strength = updatedCharacter.Strength;
-                character.Defense = updatedCharacter.Defense;
-                character.Intelligence = updatedCharacter.Intelligence;
-                character.Class = updatedCharacter.Class;
-                */
 
-                serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+                dbCharacter.Name = updatedCharacter.Name;
+                dbCharacter.HitPoints = updatedCharacter.HitPoints;
+                dbCharacter.Strength = updatedCharacter.Strength;
+                dbCharacter.Defense = updatedCharacter.Defense;
+                dbCharacter.Intelligence = updatedCharacter.Intelligence;
+                dbCharacter.Class = updatedCharacter.Class;
+
+                await _dataContext.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
                 serviceResponse.Message = "Character has been updated.";
 
             }
@@ -92,9 +96,12 @@ namespace RpgAPI.Service
 
             try
             {
-                Character character = characters.First(c => c.Id == id);
-                characters.Remove(character);
-                serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == id);
+                _dataContext.Characters.Remove(dbCharacter);
+                await _dataContext.SaveChangesAsync();
+                serviceResponse.Data = await _dataContext.Characters
+                    .Select(c => _mapper.Map<GetCharacterDto>(c))
+                    .ToListAsync();
                 serviceResponse.Message = "Character with id: " + "(" + id + ")" + " has been deleted.";
             }
             catch (Exception e)
@@ -106,4 +113,4 @@ namespace RpgAPI.Service
             return serviceResponse;
         }
     }
-}
+} 

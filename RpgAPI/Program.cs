@@ -1,9 +1,15 @@
 global using RpgAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using RpgAPI.Data;
 using RpgAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Registering DataContext and configuring connection to SQL Server DB using our ConnectionString
+builder.Services.AddDbContext<DataContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
