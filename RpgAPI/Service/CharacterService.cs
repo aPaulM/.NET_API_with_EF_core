@@ -29,11 +29,13 @@ namespace RpgAPI.Service
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
+        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters(int userId)
         {
 
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            var dbCharacters = await _dataContext.Characters.ToListAsync();
+            var dbCharacters = await _dataContext.Characters
+                .Where(c => c.User.Id == userId)
+                .ToListAsync();
             serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
 
             return serviceResponse;

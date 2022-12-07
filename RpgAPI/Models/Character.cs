@@ -11,8 +11,8 @@
         public int Intelligence { get; set; } = 5;
         public RpgClass Class { get; set; } = RpgClass.Knight;
 
-//----------------------------------------------------------------------------
-        public int UserId { get; set; }
+        //----------------------------------------------------------------------------
+        public int? UserId { get; set; }
         public User? User { get; set; }
         
 
