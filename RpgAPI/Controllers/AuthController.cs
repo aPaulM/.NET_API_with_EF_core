@@ -15,11 +15,24 @@ namespace RpgAPI.Controllers
             _authRepo = authRepo;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<ActionResult<ServiceResponse<int>>> Register(UserRegisterDto request)
         {
             var serviceResponse = await _authRepo.Register(
                 new User { Username = request.Username }, request.Password );
+
+            if (!serviceResponse.Success)
+            {
+                return BadRequest(serviceResponse);
+            }
+            return Ok(serviceResponse);
+
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLoginDto request)
+        {
+            var serviceResponse = await _authRepo.Login(request.Username, request.Password);
 
             if (!serviceResponse.Success)
             {
