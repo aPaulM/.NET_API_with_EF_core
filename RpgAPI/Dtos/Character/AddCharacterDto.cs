@@ -1,8 +1,7 @@
-﻿namespace RpgAPI.Dto
+﻿namespace RpgAPI.Dtos.Character
 {
-    public class GetCharacterDto
+    public class AddCharacterDto
     {
-        public int Id { get; set; }
         public string Name { get; set; } = "Goffridus";
         public int HitPoints { get; set; } = 100;
         public int Strength { get; set; } = 10;
