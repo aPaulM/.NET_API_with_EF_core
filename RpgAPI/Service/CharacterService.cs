@@ -20,9 +20,11 @@ namespace RpgAPI.Service
             _httpContextAccessor = httpContextAccessor;
         }
 
+      //-----------------------------------------------------------------------------------------------------------
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User
             .FindFirstValue(ClaimTypes.NameIdentifier));
 
+      //-----------------------------------------------------------------------------------------------------------
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddNewCharacter(AddCharacterDto newCharacter)
         {
@@ -56,7 +58,7 @@ namespace RpgAPI.Service
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
             try
             {
-                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == id);
+                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == id && c.User.Id == GetUserId());
                 serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
             }
             catch(Exception e)
@@ -107,13 +109,26 @@ namespace RpgAPI.Service
 
             try
             {
-                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == id);
-                _dataContext.Characters.Remove(dbCharacter);
-                await _dataContext.SaveChangesAsync();
-                serviceResponse.Data = await _dataContext.Characters
-                    .Select(c => _mapper.Map<GetCharacterDto>(c))
-                    .ToListAsync();
-                serviceResponse.Message = "Character with id: " + "(" + id + ")" + " has been deleted.";
+                var dbCharacter = await _dataContext.Characters
+                    .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
+
+                if (dbCharacter != null)
+                {
+                    _dataContext.Characters.Remove(dbCharacter);
+                    await _dataContext.SaveChangesAsync();
+                    serviceResponse.Data = await _dataContext.Characters
+                        .Where(c => c.User.Id == GetUserId())
+                        .Select(c => _mapper.Map<GetCharacterDto>(c))
+                        .ToListAsync();
+
+                    serviceResponse.Message = "Character with id: " + "(" + id + ")" + " has been deleted.";
+                } 
+                else
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Character Not Found!";
+                }
+
             }
             catch (Exception e)
             {
