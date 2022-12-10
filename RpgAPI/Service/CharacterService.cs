@@ -76,23 +76,27 @@ namespace RpgAPI.Service
 
             try
             {
-               
-                var dbCharacter = await _dataContext.Characters.FirstAsync(c => c.Id == updatedCharacter.Id);
 
-                // _mapper.Map(updatedCharacter, character);
-                // The line above REPLACES all the code below... With a single line of code using an AutoMapper!!!
+                var dbCharacter = await _dataContext.Characters
+                    .Include(c => c.User)
+                    .FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
 
-                dbCharacter.Name = updatedCharacter.Name;
-                dbCharacter.HitPoints = updatedCharacter.HitPoints;
-                dbCharacter.Strength = updatedCharacter.Strength;
-                dbCharacter.Defense = updatedCharacter.Defense;
-                dbCharacter.Intelligence = updatedCharacter.Intelligence;
-                dbCharacter.Class = updatedCharacter.Class;
+                if (dbCharacter.User.Id == GetUserId())
+                {
+                    // _mapper.Map(updatedCharacter, character);
+                    // The line above REPLACES all the code below... With a single line of code using an AutoMapper!!!
 
-                await _dataContext.SaveChangesAsync();
-                serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
-                serviceResponse.Message = "Character has been updated.";
+                    dbCharacter.Name = updatedCharacter.Name;
+                    dbCharacter.HitPoints = updatedCharacter.HitPoints;
+                    dbCharacter.Strength = updatedCharacter.Strength;
+                    dbCharacter.Defense = updatedCharacter.Defense;
+                    dbCharacter.Intelligence = updatedCharacter.Intelligence;
+                    dbCharacter.Class = updatedCharacter.Class;
 
+                    await _dataContext.SaveChangesAsync();
+                    serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
+                    serviceResponse.Message = "Character has been updated.";
+                }
             }
             catch(Exception e)
             {
@@ -128,7 +132,6 @@ namespace RpgAPI.Service
                     serviceResponse.Success = false;
                     serviceResponse.Message = "Character Not Found!";
                 }
-
             }
             catch (Exception e)
             {
