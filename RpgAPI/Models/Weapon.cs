@@ -1,4 +1,6 @@
-﻿namespace RpgAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace RpgAPI.Models
 {
     public class Weapon
     {
@@ -7,8 +9,10 @@
         public int Damage { get; set; }
 
         //--------------------------------------------------------------------
-        public int CharacterId { get; set; }
+        [JsonIgnore]
         public Character Character { get; set; }
+        public int CharacterId { get; set; }
+        
         
 
 

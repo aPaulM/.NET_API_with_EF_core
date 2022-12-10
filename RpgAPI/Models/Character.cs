@@ -2,7 +2,6 @@
 {
     public class Character
     {
-
         public int Id { get; set; }
         public string Name { get; set; } = "Goffridus";
         public int HitPoints { get; set; } = 100;
@@ -12,7 +11,10 @@
         public RpgClass Class { get; set; } = RpgClass.Knight;
 
         //----------------------------------------------------------------------------
-        public Weapon? Weapon { get; set; }
+        public Weapon Weapon { get; set; }
+
+        //----------------------------------------------------------------------------
+        public List<Skill> Skills { get; set; }
 
         //----------------------------------------------------------------------------
         public int? UserId { get; set; }

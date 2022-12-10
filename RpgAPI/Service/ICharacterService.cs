@@ -1,4 +1,5 @@
 ﻿using RpgAPI.Dtos.Character;
+using RpgAPI.Dtos.Skill;
 
 namespace RpgAPI.Service
 {
@@ -14,5 +15,7 @@ namespace RpgAPI.Service
         Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter);
         //Delete
         Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
+        //Post
+        Task<ServiceResponse<GetCharacterDto>> AddCharacterSkill(AddCharacterSkillDto addCharacterSkill);
     }
 }

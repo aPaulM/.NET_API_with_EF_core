@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RpgAPI.Dtos.Character;
+using RpgAPI.Dtos.Skill;
 using RpgAPI.Service;
 using System.Security.Claims;
 
@@ -62,6 +63,12 @@ namespace RpgAPI.Controllers
                 return NotFound(serviceResponse);
             }
             return Ok(serviceResponse);
+        }
+
+        [HttpPost("AddSkill")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> AddCharacterSkill(AddCharacterSkillDto newCharacterSkill)
+        {
+            return Ok(await _characterService.AddCharacterSkill(newCharacterSkill));
         }
     }
 }

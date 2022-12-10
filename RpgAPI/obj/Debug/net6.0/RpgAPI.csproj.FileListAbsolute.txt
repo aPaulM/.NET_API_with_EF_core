@@ -91,3 +91,8 @@ C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\bin\Debug\net6.0\Microsoft.AspNetCor
 C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\bin\Debug\net6.0\Scrutor.dll
 C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\staticwebassets\msbuild.RpgAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.RpgAPI.props
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.RpgAPI.props
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.RpgAPI.props
+C:\Users\Aiden\Source\C#Repos\RpgAPI\RpgAPI\obj\Debug\net6.0\staticwebassets.pack.json

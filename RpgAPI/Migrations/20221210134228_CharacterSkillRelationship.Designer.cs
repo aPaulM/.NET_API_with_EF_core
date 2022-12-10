@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RpgAPI.Data;
 
@@ -11,9 +12,11 @@ using RpgAPI.Data;
 namespace RpgAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221210134228_CharacterSkillRelationship")]
+    partial class CharacterSkillRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,26 +95,6 @@ namespace RpgAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Damage = 40,
-                            Name = "Blizzard"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Damage = 30,
-                            Name = "Spark"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Damage = 50,
-                            Name = "FireBlast"
-                        });
                 });
 
             modelBuilder.Entity("RpgAPI.Models.User", b =>
